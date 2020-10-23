@@ -33,6 +33,22 @@ class Movie
         return $result->fetch();
     }
 
+    public static function createMovie(array $data): int
+    {
+        $db = Db::getConnection();
+
+        $sql = "INSERT INTO movie (" . implode(', ', array_keys($data)) . ")
+                VALUES (:" . implode(', :', array_keys($data)) . ")";
+        $result = $db->prepare($sql);
+
+        foreach (array_keys($data) as $key) {
+            $result->bindParam(":{$key}", $data[$key], in_array($key, ['id', 'year']) ? PDO::PARAM_INT : PDO::PARAM_STR);
+        }
+        $result->execute();
+
+        return $db->lastInsertId();
+    }
+
     public static function updateMovie(array $data): void
     {
         $db = Db::getConnection();

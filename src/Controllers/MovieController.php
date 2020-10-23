@@ -37,4 +37,26 @@ class MovieController extends AbstractController
         Movie::deleteMovieById($id);
         header('Location: /');
     }
+
+    public function addAction()
+    {
+        $this->render('movie/add.html.twig', [
+            'formats' => Movie::FORMATS,
+        ]);
+    }
+
+    public function createAction()
+    {
+        $errors = Movie::validate($_POST);
+        if (empty($errors)) {
+            $id = Movie::createMovie($_POST);
+            header("Location: /movies/view/{$id}");
+        }
+
+        $this->render('movie/add.html.twig', [
+            'movie' => $_POST,
+            'formats' => Movie::FORMATS,
+            'errors' => $errors,
+        ]);
+    }
 }
