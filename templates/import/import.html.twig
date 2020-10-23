@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Import{% endblock %}
+
+{% block body %}
+    <form class="mt-4 form-edit-movie" action="/movies/import/process" method="POST" enctype="multipart/form-data">
+        {% if errors is defined %}
+            {{ include('alert.html.twig') }}
+        {% endif %}
+
+        <div class="form-group">
+            <label for="file">File (*.doc, *.docx)</label>
+            <input type="file" class="form-control-file" id="file" name="file">
+        </div>
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-dark" href="/"><i class="fas fa-arrow-left icon"></i>Back</a>
+            </div>
+            <div class="col text-right">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-pen icon"></i>Import</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -2,7 +2,7 @@
 
 class Movie
 {
-    const SHOW_BY_DEFAULT = 5;
+    const SHOW_BY_DEFAULT = 50;
     const FORMATS = [
         'VHS',
         'DVD',
@@ -47,6 +47,21 @@ class Movie
         $result->execute();
 
         return $db->lastInsertId();
+    }
+
+    public static function createMovieFromArray(array $data): void
+    {
+        $db = Db::getConnection();
+
+        $sqlValues = [];
+        foreach ($data as $values) {
+            $sqlValues[] = "('" . implode("', '", $values) . "')";
+        }
+
+        $sql = 'INSERT INTO movie (title, year, format, actors)
+                VALUES ' . implode(', ', $sqlValues);
+        $result = $db->prepare($sql);
+        $result->execute();
     }
 
     public static function updateMovie(array $data): void

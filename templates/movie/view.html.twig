@@ -14,7 +14,11 @@
             </div>
         </div>
         <div class="card-body">
-            <p class="card-text">{{ movie.description }}</p>
+            {% if movie.description|length > 0 %}
+                <p class="card-text">{{ movie.description }}</p>
+            {% else %}
+                <p class="card-text text-center">(no description)</p>
+            {% endif %}
         </div>
         <div class="card-footer">
             <div class="row">
