@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'movies/import/process' => 'import/process', //ImportController::processAction()
+    'movies/import' => 'import/import', //ImportController::importAction()
+
     'movies/delete/([0-9]+)' => 'movie/delete/$1', // MovieController::deleteAction()
     'movies/update/([0-9]+)' => 'movie/update/$1', // MovieController::updateAction()
     'movies/edit/([0-9]+)' => 'movie/edit/$1', // MovieController::editAction()
