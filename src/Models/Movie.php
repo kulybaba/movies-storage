@@ -97,6 +97,21 @@ class Movie
         $result->execute();
     }
 
+    public static function getMoviesByKeyword(string $keyword, int $count = self::SHOW_BY_DEFAULT): array
+    {
+        $db = Db::getConnection();
+        $sql = "SELECT *
+                FROM movie
+                WHERE title LIKE '%{$keyword}%' OR actors LIKE '%{$keyword}%'
+                ORDER BY title LIMIT :count";
+        $result = $db->prepare($sql);
+        $result->bindParam(':count', $count, PDO::PARAM_INT);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+
+        return $result->fetchAll();
+    }
+
     public static function validate(array $data): array
     {
         $errors = [];
