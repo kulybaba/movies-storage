@@ -33,7 +33,7 @@ class Movie
         return $result->fetch();
     }
 
-    public static function updateMovie(array $data)
+    public static function updateMovie(array $data): void
     {
         $db = Db::getConnection();
 
@@ -54,6 +54,15 @@ class Movie
             $result->bindParam(":{$key}", $data[$key], in_array($key, ['id', 'year']) ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
 
+        $result->execute();
+    }
+
+    public static function deleteMovieById(int $id): void
+    {
+        $db = Db::getConnection();
+        $sql = 'DELETE FROM movie WHERE id = :id';
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
         $result->execute();
     }
 
