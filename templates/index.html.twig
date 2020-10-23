@@ -1,5 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h3>Main page</h3>
+    {% for movie in movies %}
+        <div class="card border-dark mt-4">
+            <div class="card-header"><i class="fas fa-film icon"></i><b><a href="/movies/view/{{ movie.id }}">{{ movie.title }}</a></b></div>
+            <div class="card-body">
+                <p class="card-text">{{ movie.description }}</p>
+                <div class="text-right">
+                    <a href="/movies/view/{{ movie.id }}">More...</a>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col">
+                        <i class="fas fa-users icon"></i><b>Actors:</b> {{ movie.actors }}
+                    </div>
+                    <div class="col text-right">
+                        <i class="fas fa-file-video icon"></i>{{ movie.format }}&nbsp;&nbsp;&nbsp;
+                        <i class="fas fa-calendar-alt icon"></i>{{ movie.year }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

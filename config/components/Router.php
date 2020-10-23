@@ -21,7 +21,7 @@ class Router
 
                 $controllerName = ucfirst(array_shift($segments) . 'Controller');
                 $actionName = array_shift($segments) . 'Action';
-                $params = $segments;
+                $params = array_shift($segments);
 
                 $controllerPath = ROOT . "/src/Controllers/{$controllerName}.php";
                 if (!file_exists($controllerPath)) {
@@ -34,6 +34,7 @@ class Router
                 }
 
                 $controller->$actionName($params);
+                break;
             }
         }
     }

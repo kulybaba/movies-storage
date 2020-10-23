@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add{% endblock %}
+
+{% block body %}
+    <form class="mt-4 form-edit-movie" action="/movie/create" method="POST">
+        {% if errors is defined %}
+            {{ include('alert.html.twig') }}
+        {% endif %}
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" {% if movie.title is defined %}value="{{ movie.title }}"{% endif %}>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" rows="3" name="description">{% if movie.description is defined %}{{ movie.description }}{% endif %}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="format">Format</label>
+            <select id="format" class="form-control" name="format">
+                {% for format in formats %}
+                    <option {% if movie.format is defined and movie.format == format %}selected{% endif %}>{{ format }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="description">Actors</label>
+            <input type="text" class="form-control" id="actors" name="actors" {% if movie.actors is defined %}value="{{ movie.actors }}"{% endif %}>
+        </div>
+        <div class="form-group">
+            <label for="description">Year</label>
+            <select id="year" class="form-control" name="year">
+                {% for year in range('now'|date('Y') + 4, 'now'|date('Y') - 100) %}
+                    <option {% if movie.year is defined %}{% if movie.year == year %}selected{% endif %}{% elseif year == 'now'|date('Y') %}selected{% endif %}>{{ year }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-dark" href="/"><i class="fas fa-arrow-left icon"></i>Back</a>
+            </div>
+            <div class="col text-right">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-pen icon"></i>Add</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

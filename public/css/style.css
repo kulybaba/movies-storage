@@ -1,0 +1,22 @@
+.icon {
+    margin-right: 10px;
+}
+
+a, a:hover {
+    color: black;
+}
+
+ul {
+    margin: 0;
+}
+
+.card {
+    border-radius: 15px;
+    border-width: 3px !important;
+}
+
+.form-edit-movie {
+    border: 3px black solid;
+    border-radius: 15px;
+    padding: 20px;
+}
