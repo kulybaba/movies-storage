@@ -8,5 +8,4 @@ class SiteController extends AbstractController
             'movies' => Movie::getAllMovies(),
         ]);
     }
-
 }
