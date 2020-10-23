@@ -41,7 +41,7 @@ class ImportController extends AbstractController
                 }
             }
 
-            Movie::createMovieFromArray($movies);
+            Movie::createMoviesFromArray($movies);
             header('Location: /');
         }
 

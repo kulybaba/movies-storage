@@ -49,19 +49,17 @@ class Movie
         return $db->lastInsertId();
     }
 
-    public static function createMovieFromArray(array $data): void
+    public static function createMoviesFromArray(array $data): void
     {
         $db = Db::getConnection();
 
-        $sqlValues = [];
-        foreach ($data as $values) {
-            $sqlValues[] = "('" . implode("', '", $values) . "')";
-        }
-
-        $sql = 'INSERT INTO movie (title, year, format, actors)
-                VALUES ' . implode(', ', $sqlValues);
+        $sql = "INSERT INTO movie (title, year, format, actors)
+            VALUES (?, ?, ?, ?)";
         $result = $db->prepare($sql);
-        $result->execute();
+
+        foreach ($data as $row) {
+            $result->execute($row);
+        }
     }
 
     public static function updateMovie(array $data): void
@@ -95,6 +93,21 @@ class Movie
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
         $result->execute();
+    }
+
+    public static function getMoviesByKeyword(string $keyword, int $count = self::SHOW_BY_DEFAULT): array
+    {
+        $db = Db::getConnection();
+        $sql = "SELECT *
+                FROM movie
+                WHERE title LIKE '%{$keyword}%' OR actors LIKE '%{$keyword}%'
+                ORDER BY title LIMIT :count";
+        $result = $db->prepare($sql);
+        $result->bindParam(':count', $count, PDO::PARAM_INT);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+
+        return $result->fetchAll();
     }
 
     public static function validate(array $data): array

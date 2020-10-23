@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% if movies|length == 0 %}
+        <div class="mt-4 text-center">
+            <p>(no movies)</p>
+        </div>
+    {% endif %}
     {% for movie in movies %}
         <div class="card border-dark mt-4">
             <div class="card-header"><i class="fas fa-film icon"></i><b><a href="/movies/view/{{ movie.id }}">{{ movie.title }}</a></b></div>
