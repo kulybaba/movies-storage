@@ -13,8 +13,11 @@ services:
     db:
         container_name: db
         image: mysql:5.7
+        working_dir: /home/www
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: main
         ports:
             - "3306:3306"
+        volumes:
+            - ./:/home/www
