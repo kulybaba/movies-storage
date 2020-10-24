@@ -1,0 +1,8 @@
+CREATE TABLE movie (
+    id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    year INTEGER NOT NULL,
+    format VARCHAR(255) NOT NULL,
+    actors VARCHAR(255)
+);
