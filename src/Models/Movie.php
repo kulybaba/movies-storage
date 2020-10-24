@@ -119,10 +119,6 @@ class Movie
             $errors[] = 'Title must contain maximum 255 characters';
         }
 
-        if (empty($data['description'])) {
-            $errors[] = 'Description should not be blank';
-        }
-
         if (empty($data['format'])) {
             $errors[] = 'Format should not be blank';
         }

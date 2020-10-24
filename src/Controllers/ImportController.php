@@ -34,6 +34,7 @@ class ImportController extends AbstractController
                         $movie[] = implode(' ', $words);
 
                         if (count($movie) === 4) {
+                            $movie[1] = (int) $movie[1];
                             $movies[] = $movie;
                             $movie = [];
                         }
