@@ -11,7 +11,7 @@
             <div class="card-header"><i class="fas fa-film icon"></i><b><a href="/movies/view/{{ movie.id }}">{{ movie.title }}</a></b></div>
             <div class="card-body">
                 {% if movie.description|length > 0 %}
-                    <p class="card-text">{% if movie.description|length > 100 %}{{ movie.description|slice(0, 99) ~ '...' }}{% endif %}</p>
+                    <p class="card-text">{% if movie.description|length > 100 %}{{ movie.description|slice(0, 99) ~ '...' }}{% else %}{{ movie.description }}{% endif %}</p>
                 {% else %}
                     <p class="card-text text-center">(no description)</p>
                 {% endif %}

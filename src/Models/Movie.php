@@ -42,7 +42,7 @@ class Movie
         $result = $db->prepare($sql);
 
         foreach (array_keys($data) as $key) {
-            $result->bindParam(":{$key}", $data[$key], in_array($key, ['id', 'year']) ? PDO::PARAM_INT : PDO::PARAM_STR);
+            $result->bindParam(":{$key}", $data[$key], $key === 'year' ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
         $result->execute();
 
