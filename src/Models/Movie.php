@@ -132,8 +132,11 @@ class Movie
         return $result->fetchAll();
     }
 
-    public static function validate(array $data): array
+    public static function validate(array &$data): array
     {
+        $data = array_map('trim', $data);
+        $data = array_map('htmlspecialchars', $data);
+
         $errors = [];
         $movie = self::getMoviesByFieldsAndValues($data);
         if (!empty($movie[0]['id'])) {
@@ -150,7 +153,14 @@ class Movie
             $errors[] = 'Format should not be blank';
         }
 
-        if (empty($data['actors'])) {
+        if (!empty($data['actors'])) {
+            $actors = array_map('trim', explode(',', $data['actors']));
+            $uniqActors = array_unique($actors);
+
+            if (count($actors) > count($uniqActors)) {
+                $errors[] = 'Actors contains the same actors';
+            }
+        } elseif (empty($data['actors'])) {
             $errors[] = 'Actors should not be blank';
         } elseif (strlen($data['actors']) >= 255) {
             $errors[] = 'Actors must contain maximum 255 characters';
