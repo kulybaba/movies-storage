@@ -110,9 +110,36 @@ class Movie
         return $result->fetchAll();
     }
 
+    /**
+     * @param array $data (Example: ['title' => 'Movie title, ...])
+     * @return array
+     */
+    public static function getMoviesByFieldsAndValues(array $data): array
+    {
+        $db = Db::getConnection();
+
+        $sqlWhere = !empty($data['id']) ? ["id != {$data['id']}"] : [];
+        foreach ($data as $key => $value) {
+            $sqlWhere[] = "{$key} = " . ($key === 'year' ? "{$value}" : "\"{$value}\"");
+        }
+        $sql = 'SELECT id
+                FROM movie
+                WHERE ' . implode(' AND ', $sqlWhere);
+        $result = $db->prepare($sql);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        return $result->fetchAll();
+    }
+
     public static function validate(array $data): array
     {
         $errors = [];
+        $movie = self::getMoviesByFieldsAndValues($data);
+        if (!empty($movie[0]['id'])) {
+            $errors[] = 'Movie already exist';
+        }
+
         if (empty($data['title'])) {
             $errors[] = 'Title should not be blank';
         } elseif (strlen($data['title']) >= 255) {
