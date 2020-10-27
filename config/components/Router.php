@@ -33,7 +33,7 @@ class Router
                     throw new Exception("Not fount action: {$actionName} of controller {$controllerPath}");
                 }
 
-                $controller->$actionName($params);
+                !empty($params) ? $controller->$actionName($params) : $controller->$actionName();
                 break;
             }
         }

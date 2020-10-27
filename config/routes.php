@@ -11,5 +11,9 @@ return [
     'movie/create' => 'movie/create', // MovieController::createAction()
     'movie/add' => 'movie/add', // MovieController::addAction()
 
+    'search(.+)' => 'search/search/$1', // SearchController::searchIndex()
+
+    'index.php(.+)' => 'site/index', // SiteController::actionIndex()
+    'index.php' => 'site/index', // SiteController::actionIndex()
     '' => 'site/index', // SiteController::actionIndex()
 ];
