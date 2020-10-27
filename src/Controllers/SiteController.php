@@ -4,9 +4,14 @@ class SiteController extends AbstractController
 {
     public function indexAction()
     {
+        $page = !empty($_GET['page']) ? $_GET['page'] : 1;
+        $offset = ($page - 1) * Movie::MOVIES_LIMIT;
+        $lastPage = ceil(Movie::getCountMovies() / Movie::MOVIES_LIMIT);
+
         $this->render('index.html.twig', [
-            'movies' => !empty($_POST['search']) ? Movie::getMoviesByKeyword($_POST['search']) : Movie::getAllMovies(),
-            'search' => !empty($_POST['search']) ? $_POST['search'] : '',
+            'page' => $page,
+            'movies' => Movie::getAllMovies($offset),
+            'lastPage' => $lastPage,
         ]);
     }
 }

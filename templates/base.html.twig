@@ -29,8 +29,8 @@
                         <a class="nav-link" href="/movies/import"><i class="fas fa-file-upload icon"></i>Import</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-md-0" action="/" method="POST">
-                    <input class="form-control" type="text" name="search" value="{{ search }}" placeholder="Search" aria-label="Search">
+                <form class="form-inline my-2 my-md-0" action="/search" method="GET">
+                    <input class="form-control" type="text" name="keyword" value="{{ search }}" placeholder="Search" aria-label="Search">
                 </form>
             </div>
         </div>

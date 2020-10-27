@@ -1,0 +1,24 @@
+<div class="card border-dark mt-4">
+    <div class="card-header"><i class="fas fa-film icon"></i><b><a href="/movies/view/{{ movie.id }}">{{ movie.title }}</a></b></div>
+    <div class="card-body">
+        {% if movie.description|length > 0 %}
+            <p class="card-text">{% if movie.description|length > 100 %}{{ movie.description|slice(0, 99) ~ '...' }}{% else %}{{ movie.description }}{% endif %}</p>
+        {% else %}
+            <p class="card-text text-center">(no description)</p>
+        {% endif %}
+        <div class="text-right">
+            <a href="/movies/view/{{ movie.id }}">More...</a>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col">
+                <i class="fas fa-users icon"></i><b>Actors:</b> {{ movie.actors }}
+            </div>
+            <div class="col text-right">
+                <i class="fas fa-file-video icon"></i>{{ movie.format }}&nbsp;&nbsp;&nbsp;
+                <i class="fas fa-calendar-alt icon"></i>{{ movie.year }}
+            </div>
+        </div>
+    </div>
+</div>
