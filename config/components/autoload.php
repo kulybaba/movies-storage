@@ -4,6 +4,7 @@ spl_autoload_register(function ($class) {
     $paths = [
         '/src/Models/',
         '/src/Controllers/',
+        '/src/Services/',
         '/config/components/',
     ];
 
