@@ -19,7 +19,8 @@
     ├── /public                 # Directory contains static files such as .css
     ├── /src                    # Source code
     │   ├── Controllers         # Directory contains controllers
-    │   └── Models              # Directory contains models
+    │   ├── Models              # Directory contains models
+    │   └── Services            # Directory contains services
     ├── /templates              # Directory contains templates
     └── index.php               # Entry point
 

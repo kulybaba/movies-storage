@@ -29,8 +29,8 @@
                         <a class="nav-link" href="/movies/import"><i class="fas fa-file-upload icon"></i>Import</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-md-0" action="/" method="POST">
-                    <input class="form-control" type="text" name="search" value="{{ search }}" placeholder="Search" aria-label="Search">
+                <form class="form-inline my-2 my-md-0" action="/search" method="GET">
+                    <input class="form-control" type="text" name="keyword" value="{{ search }}" placeholder="Search" aria-label="Search">
                 </form>
             </div>
         </div>
@@ -41,6 +41,7 @@
     </div>
 
     {% block js %}
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     {% endblock %}
 </body>

@@ -9,7 +9,8 @@
                 <div class="col-10"><i class="fas fa-film icon"></i><b>{{ movie.title }}</b></div>
                 <div class="col text-right">
                     <a class="btn btn-outline-dark btn-sm" href="/movies/edit/{{ movie.id }}"><i class="fas fa-pen"></i></a>
-                    <a class="btn btn-outline-danger btn-sm" href="/movies/delete/{{ movie.id }}"><i class="fas fa-times"></i></a>
+                    <a  href="/movies/delete/{{ movie.id }}" onclick="confirm('Are you sure?')"></a>
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modal"><i class="fas fa-times"></i></button>
                 </div>
             </div>
         </div>
@@ -32,4 +33,6 @@
             </div>
         </div>
     </div>
+
+    {% include 'modal.html.twig' with { title: 'Are you sure?', body: 'Do you want to delete the movie?', url: '/movies/delete/' ~ movie.id } %}
 {% endblock %}

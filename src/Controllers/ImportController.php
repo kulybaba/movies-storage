@@ -1,8 +1,5 @@
 <?php
 
-use PhpOffice\PhpWord\IOFactory;
-use PhpOffice\PhpWord\PhpWord;
-
 class ImportController extends AbstractController
 {
     public function importAction()
@@ -12,34 +9,22 @@ class ImportController extends AbstractController
 
     public function processAction()
     {
-        if (!empty($_FILES['file']['tmp_name']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
-            $reader = IOFactory::createReader();
-            /** @var PhpWord $data */
-            $data = $reader->load($_FILES['file']['tmp_name']);
+        $errors = [];
+        $type = $_FILES['file']['type'];
+        $path = $_FILES['file']['tmp_name'];
+        if (empty($path) || !is_uploaded_file($path)) {
+            $errors[] = 'File should not be blank';
+        }
 
-            $movies = [];
-            foreach($data->getSections() as $section) {
-                $elements = $section->getElements();
-                $movie = [];
-                foreach($elements as $element) {
-                    if (get_class($element) === 'PhpOffice\PhpWord\Element\TextRun') {
-                        $words = [];
-                        foreach ($element->getElements() as $text) {
-                            $text = $text->getText();
-                            if (in_array($text, ['Title', 'Release', 'Year', 'Format', 'Stars', ': ', ' '])) {
-                                continue;
-                            }
-                            $words[] = trim($text, ": \t\n\r\0\x0B");
-                        }
-                        $movie[] = implode(' ', $words);
+        if (!in_array($type, [DocParser::FORMAT_DOC, DocParser::FORMAT_DOCX, TxtParser::FORMAT_TXT])) {
+            $errors[] = 'File extension must be: doc, docx, txt';
+        }
 
-                        if (count($movie) === 4) {
-                            $movie[1] = (int) $movie[1];
-                            $movies[] = $movie;
-                            $movie = [];
-                        }
-                    }
-                }
+        if (empty($errors)) {
+            if (in_array($type, [DocParser::FORMAT_DOC, DocParser::FORMAT_DOCX])) {
+                $movies = (new DocParser())->parse($path, $type);
+            } else {
+                $movies = (new TxtParser())->parse($path);
             }
 
             Movie::createMoviesFromArray($movies);
@@ -47,7 +32,7 @@ class ImportController extends AbstractController
         }
 
         $this->render('import/import.html.twig', [
-            'errors' => ['File should not be blank'],
+            'errors' => $errors,
         ]);
     }
 }
